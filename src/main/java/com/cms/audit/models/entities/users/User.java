@@ -2,10 +2,15 @@ package com.cms.audit.models.entities.users;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.cms.audit.models.entities.kka.KKA;
+import com.cms.audit.models.entities.lha.LHA;
+import com.cms.audit.models.entities.schedule.Schedule;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -18,7 +23,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table( name = "t_users", 
+@Table( name = "users", 
         uniqueConstraints = { 
           @UniqueConstraint(columnNames = "email"),
           @UniqueConstraint(columnNames = "username") 
@@ -35,12 +40,21 @@ public class User implements UserDetails{
 
   private String password;
 
+  @Enumerated(EnumType.STRING)
+  private Role role;
+
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "fk_up_id")
   private UserProfile profile;
 
-  @Enumerated(EnumType.STRING)
-  private Role role;
+  @OneToMany(mappedBy = "user")
+  private Set<Schedule> schedule;
+
+  @OneToMany(mappedBy = "user")
+  private Set<KKA> kka;
+
+  @OneToMany(mappedBy = "user")
+  private Set<LHA> lha;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {

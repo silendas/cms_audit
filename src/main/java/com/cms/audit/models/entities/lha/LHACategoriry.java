@@ -1,8 +1,6 @@
-package com.cms.audit.models.entities.branch;
+package com.cms.audit.models.entities.lha;
 
-import java.util.Set;
-
-import com.cms.audit.models.entities.schedule.Schedule;
+import com.cms.audit.models.entities.users.User;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -15,16 +13,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "province")
-public class Province {
-
+@Table(name = "lha_category")
+public class LHACategoriry {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    @ManyToOne
+    @JoinColumn(name = "lha_case_id", nullable = false)
+    private LHACase lhacase;
 
-    @OneToMany(mappedBy = "province")
-    private Set<City> city;
+    private String name;
 
 }

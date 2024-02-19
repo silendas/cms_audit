@@ -1,28 +1,32 @@
-// package com.cms.audit.models.entities.branch;
+package com.cms.audit.models.entities.branch;
 
-// import jakarta.persistence.*;
-// import lombok.AllArgsConstructor;
-// import lombok.Builder;
-// import lombok.Data;
-// import lombok.NoArgsConstructor;
+import java.util.Set;
 
-// @Data
-// @Builder
-// @NoArgsConstructor
-// @AllArgsConstructor
-// @Entity
-// @Table( name = "t_city")
-// public class City {
-    
-//     @Id
-//     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//     private Long id;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-//     private String name;
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "city")
+public class City {
 
-//     @ManyToOne
-//     @JoinColumn(name="province_id", nullable=false)
-//     private Province province;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
+    private String name;
 
-// }
+    @ManyToOne
+    @JoinColumn(name = "province_id", nullable = false)
+    private Province province;
+
+    @OneToMany(mappedBy = "city")
+    private Set<Branch> branch;
+
+}

@@ -1,32 +1,47 @@
-// package com.cms.audit.models.entities.lha;
+package com.cms.audit.models.entities.lha;
 
-// import java.util.Date;
+import java.util.Date;
+import java.util.Set;
 
-// import jakarta.persistence.*;
-// import lombok.AllArgsConstructor;
-// import lombok.Builder;
-// import lombok.Data;
-// import lombok.NoArgsConstructor;
+import com.cms.audit.models.entities.users.User;
+import com.cms.audit.models.entities.users.UserProfile;
 
-// @Data
-// @Builder
-// @NoArgsConstructor
-// @AllArgsConstructor
-// @Entity
-// @Table( name = "t_lha")
-// public class LHA {
-    
-//     @Id
-//     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//     private Long id;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-//     @Column(name = "created_at")
-//     private Date createDate;
-    
-//     @OneToMany(mappedBy = "user")
-//     private Long userId;
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "lha")
+public class LHA {
 
-//     @OneToMany(mappedBy = "case")
-//     private String caseId;    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-// }
+    @Column(name = "created_at")
+    private Date createDate;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "lha_case_id")
+    private LHACase lhaCase;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "lha_category_id")
+    private LHACategoriry lhaCategory;
+
+    @Column(name = "description", columnDefinition = "TEXT")
+    private String description;
+
+    private String status;
+
+}

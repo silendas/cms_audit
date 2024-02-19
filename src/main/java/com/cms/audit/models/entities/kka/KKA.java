@@ -1,32 +1,39 @@
-// package com.cms.audit.models.entities.kka;
+package com.cms.audit.models.entities.kka;
 
-// import jakarta.persistence.*;
-// import lombok.AllArgsConstructor;
-// import lombok.Builder;
-// import lombok.Data;
-// import lombok.NoArgsConstructor;
+import java.util.Set;
 
-// @Data
-// @Builder
-// @NoArgsConstructor
-// @AllArgsConstructor
-// @Entity
-// @Table( name = "t_kka")
-// public class KKA {
+import com.cms.audit.models.entities.branch.Branch;
+import com.cms.audit.models.entities.users.User;
 
-//     @Id
-//     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//     private Long id;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-//     @Column(name = "branch_id")
-//     private Long branchId;
-    
-//     @Column(name = "user_id")
-//     private Long userId;
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "t_kka")
+public class KKA {
 
-//     private String title;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-//     @Column(name = "sub_kka_id")
-//     private String sub_title;
-    
-// }
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "branch_id")
+    private Branch branch;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    private String title;
+
+    @OneToMany(mappedBy = "kka")
+    private Set<SubKKA> subKka;
+
+}

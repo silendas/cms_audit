@@ -1,4 +1,4 @@
-package com.cms.audit.models.entities.branch;
+package com.cms.audit.models.entities.lha;
 
 import java.util.Set;
 
@@ -15,8 +15,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "province")
-public class Province {
+@Table(name = "lha_case")
+public class LHACase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +24,7 @@ public class Province {
 
     private String name;
 
-    @OneToMany(mappedBy = "province")
-    private Set<City> city;
+    @OneToMany(mappedBy = "lhacase")
+    private Set<LHACategoriry> lhaCategory;
 
 }

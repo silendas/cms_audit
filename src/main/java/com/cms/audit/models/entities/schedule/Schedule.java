@@ -1,35 +1,44 @@
-// package com.cms.audit.models.entities.schedule;
+package com.cms.audit.models.entities.schedule;
 
-// import java.util.Date;
+import java.util.Date;
 
-// import jakarta.persistence.*;
-// import lombok.AllArgsConstructor;
-// import lombok.Builder;
-// import lombok.Data;
-// import lombok.NoArgsConstructor;
+import com.cms.audit.models.entities.branch.Branch;
+import com.cms.audit.models.entities.schedule.Schedule_categories;
+import com.cms.audit.models.entities.users.User;
 
-// @Data
-// @Builder
-// @NoArgsConstructor
-// @AllArgsConstructor
-// @Entity
-// @Table( name = "t_checklist")
-// public class Schedule {
-    
-//     @Id
-//     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//     private Long id;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-//     @OneToMany(mappedBy = "user")
-//     @Column(name = "user_id")
-//     private Long userId;
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "schedule")
+public class Schedule {
 
-//     @OneToMany(mappedBy = "branch")
-//     @Column(name = "branch_id")
-//     private Long branchId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-//     private Date planning_start;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-//     private Date planning_end;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "branch_id")
+    private Branch branch;
 
-// }
+    @Enumerated(EnumType.STRING)
+    private Schedule_categories categories;
+
+    private Date planning_start;
+
+    private Date planning_end;
+
+    private Date created_at;
+
+}
